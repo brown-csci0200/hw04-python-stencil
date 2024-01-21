@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Sebastian",
+        "time in group": 2.3,
+        "skills": ["sleeping", "screeching"]
+    },
+    {
+        "name": "Claire",
+        "time in group": 0.2,
+        "skills": ["coding", "science", "breathing"]
+    },
+    {
+        "name": "Cathy",
+        "time in group": 2.3,
+        "skills": ["eating", "sleeping"]
+    }
+]
