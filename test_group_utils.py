@@ -1,7 +1,7 @@
 import pytest
 import copy
 
-import hw4 as h4
+import group_utils as g
 
 example_person_list = [
     {"name": "Sebastian", "time in group": 2.3, "skills": ["sleeping", "screeching"]},
@@ -9,22 +9,31 @@ example_person_list = [
     {"name": "Cathy", "time in group": 2.3, "skills": ["eating", "sleeping"]}
 ]
 
-'''
-Similar to @Before in junit, pytest runs this before every test method
-'''
+# test_group = ... # This variable is set up by setup_function()
+
 def setup_function():
+    """
+    This is a function tht runs **before each test**, similar to @Before
+    in Java.  We use this to set up some data (the variable test_group)
+    which we can use in our tests
+    """
     # set test_group as global so that other methods can find it
     global test_group
 
     # copy.deepcopy makes a brand-new copy of example_person_list
     # and every piece of data contained in it on the heap
-    test_group = h4.Group(copy.deepcopy(example_person_list))
+    test_group = g.Group(copy.deepcopy(example_person_list))
     # now we can use and refer to test_group in any test function in this file
 
-'''
-pytest assertions simply check if boolean expressions evaluate to true
-Make sure ALL of your testing functions start with test_ and are in a file that starts with test_!!
-'''
+# TODO:  Write your tests here!
+
+##############################################################################
+# EXAMPLE TEST:  Here's an example of how to write assertions with pytest
+# Some important things to note
+#  - pytest assertions simply check if boolean expressions evaluate to true
+#  - Make sure ALL of your testing functions start with "test_" and are in a 
+#    file that starts with "test_".  If you don't do this, pytest won't work!
+##############################################################################
 def test_example():
     assert 2 == 2
 
