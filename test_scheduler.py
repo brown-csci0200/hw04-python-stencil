@@ -3,13 +3,7 @@ import pytest
 from node_graph import NodeEdgeGraph
 import scheduler as s
 
-# Some constants we can use for nodes (to save on typing)
-n_a = "Node A"
-n_b = "Node B"
-n_c = "Node C"
-n_d = "Node D"
-
-# Some constants for labs (to save on typing)
+# Some constants we can use for labs (to save on typing)
 lab1 = "Lab 1"
 lab2 = "Lab 2"
 lab3 = "Lab 3"
@@ -17,14 +11,14 @@ lab4 = "Lab 4"
 
 # ############## Helper methods for writing tests #############
 def add_simple_nodes(graph):
-    graph.add_node(n_a)
-    graph.add_node(n_b)
-    graph.add_node(n_c)
-    graph.add_node(n_d)
+    graph.add_node(lab1)
+    graph.add_node(lab2)
+    graph.add_node(lab3)
+    graph.add_node(lab4)
 
 def add_simple_edges(graph):
-    graph.add_undirected_edge(n_a, n_b)
-    graph.add_undirected_edge(n_b, n_c)
+    graph.add_undirected_edge(lab1, lab2)
+    graph.add_undirected_edge(lab2, lab3)
 
 def make_simple(graph_name: str) -> NodeEdgeGraph:
     graph = NodeEdgeGraph(graph_name)
@@ -57,7 +51,7 @@ def test_check_validity_false():
 def test_find_schedule_valid():
     g = make_simple("a graph")
     schedule = s.find_schedule(g)
-    assert s.check_validity(schedule) is True
+    assert s.check_validity(g, schedule) is True
 
 def test_schedule_invalid():
     g = make_simple("a graph")
