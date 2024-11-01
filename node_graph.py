@@ -2,8 +2,8 @@ class NodeEdgeGraph:
 
     # ---------- The Node class --------------------
     class Node:
-        def __init__(self, descr: str):
-            self.descr = descr
+        def __init__(self, label: str):
+            self.label = label
             self.next_nodes = [] # Empty list (ArrayList)
 
         def has_edge(self, node) -> bool:
@@ -29,8 +29,7 @@ class NodeEdgeGraph:
             label  -- the label for the node we want
             create -- if create=True, node will be created if it doesn't exist,
                       otherwise, will raise ValueError if node is missing (default)
-                      (This is a "keyword argument", which is used in Python to make
-                       optional arguments to add extra behavior)
+                      (This is a "keyword argument", used to create optional arguments)
         """
         if label not in self.all_nodes:
             if create:
@@ -50,7 +49,7 @@ class NodeEdgeGraph:
         if label in self.all_nodes:
             raise ValueError(f"Node {label} already exists in graph")
 
-        new_node = self.Node(label)  # Could also just write Node(descr)
+        new_node = self.Node(label)  # Could also just write Node(label)
         self.all_nodes[label] = new_node
 
     def add_directed_edge(self, label1: str, label2: str):
@@ -78,3 +77,29 @@ class NodeEdgeGraph:
         """
         self.add_directed_edge(label1, label2)
         self.add_directed_edge(label2, label1)
+
+    def get_neighbors(self, from_node: str) -> set[str]:
+        """
+        Get the the labels for all neighbors for a node
+
+        Parameters
+            from_node -- The node 
+        """
+        node = self.get_node(from_node)  # throws ValueError if node doesn't exist
+
+        neighbors = set()
+        for n in node.next_nodes:
+            neighbors.add(n.label)
+        
+        return neighbors
+
+    def get_all_nodes(self):
+        """
+        Get a list of all node names
+        """
+        result = set()
+
+        for k in self.all_nodes.keys():
+            result.add(k)
+        
+        return result  
