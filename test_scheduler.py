@@ -53,6 +53,8 @@ def test_get_all_nodes():
 ##############################################
 def test_check_validity_true():
     g = make_simple("a graph")
+    g.add_undirected_edge(lab1, lab2)
+    g.add_undirected_edge(lab2, lab3)
 
     proposed_schedule = [
         {lab1, lab3, lab4}, # <--- Using curly brackets here creates a set
@@ -63,6 +65,8 @@ def test_check_validity_true():
 
 def test_check_validity_false():
     g = make_simple("a graph")
+    g.add_undirected_edge(lab1, lab2)
+    g.add_undirected_edge(lab2, lab3)
 
     proposed_schedule = [
         {lab3, lab4},
@@ -73,11 +77,15 @@ def test_check_validity_false():
 
 def test_find_schedule_valid():
     g = make_simple("a graph")
+    g.add_undirected_edge(lab1, lab2)
+    g.add_undirected_edge(lab2, lab3)
     schedule = s.find_schedule(g)
     assert s.check_validity(g, schedule) is True
 
 def test_schedule_invalid():
     g = make_simple("a graph")
+    g.add_undirected_edge(lab1, lab2)
+    g.add_undirected_edge(lab2, lab3)
     g.add_undirected_edge(lab3, lab1)
 
     with pytest.raises(s.NoScheduleError):
