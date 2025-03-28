@@ -7,9 +7,9 @@ class Group:
           - relevant skills to the group
           
         Fields:
-        person_list: a list of people. See the documentation for the constructor
+        _person_list: a list of people. See the documentation for the constructor
         for the description of a person.
-        skill_dict: a dict from a skill (string) to a set of all of the people's
+        _skill_dict: a dict from a skill (string) to a set of all of the people's
         names (strings) who have that skill'''
 
     '''Constructor for a Group that takes in a list of people. Assume all names are unique.
@@ -23,24 +23,24 @@ class Group:
     '''
     def __init__(self, starting_list: list[dict] = None):
         if starting_list is None:
-            self.person_list = []
+            self._person_list = []
         else:
-            self.person_list = starting_list
+            self._person_list = starting_list
         self.populate_skills()
 
     def populate_skills(self) -> None:
-        ''' Goes through the people in person_list and populates skill_dict,
+        ''' Goes through the people in _person_list and populates _skill_dict,
         which maps a skill name to a Set of people who have that skill. Intended
         as a helper function for the constructor (should not be called 
         by itself).'''
 
-        self.skill_dict = {}
-        for person in self.person_list:
+        self._skill_dict = {}
+        for person in self._person_list:
             for skill in person["skills"]:
-                if skill not in self.skill_dict:
-                    self.skill_dict[skill] = set([person["name"]])
+                if skill not in self._skill_dict:
+                    self._skill_dict[skill] = set([person["name"]])
                 else:
-                    self.skill_dict[skill].add(person["name"])
+                    self._skill_dict[skill].add(person["name"])
 
     def add_person(self, name: str, time: float, skills: list[str]) -> None:
         '''Adds a person to the person list. Assume a person of that name does not already 
@@ -55,20 +55,20 @@ class Group:
         # makes a copy of the skills list to avoid mutation from the outside
         new_person = {"name": name, "time in group": time, "skills": list(skills)}
 
-        self.person_list.append(new_person)
+        self._person_list.append(new_person)
         for skill in skills:
-            self.skill_dict[skill].add(name)
+            self._skill_dict[skill].add(name)
 
     def add_skill(self, name: str, skill: str) -> None:
         '''Associates the person with the given name the skill in both
-        person_list and skill_dict. If the name is not in the group or
+        _person_list and _skill_dict. If the name is not in the group or
         the person already has the skill, does nothing.
         
         name  -- The person's name (as a string)
         skill -- the skill to be added (as a string)
         '''
 
-        for person in self.person_list:
+        for person in self._person_list:
             if person["name"] == name:
                 person["skills"].append(skill)
 
@@ -84,7 +84,7 @@ class Group:
         a boolean that answers whether or not the person has the skill
         '''
 
-        return name in self.skill_dict[skill]
+        return name in self._skill_dict[skill]
 
     def average_length_of_membership(self) -> float:
         '''Returns the average (arithmetic mean) of the time all members have 
@@ -95,7 +95,7 @@ class Group:
         '''
 
         level_sum = 0
-        for person in self.person_list:
+        for person in self._person_list:
             level_sum += person["time in group"]
 
         return level_sum
@@ -114,7 +114,7 @@ class Group:
         in the group
         '''
 
-        for person in self.person_list:
+        for person in self._person_list:
             if person["name"] == name:
                 return len(person["skills"]) / person["time in group"]
         raise LookupError("Person was not found!")
@@ -134,7 +134,7 @@ class Group:
             return []
 
         # we don't care what order person_list is in, so mutating it this way is fine
-        random.shuffle(self.person_list)
+        random.shuffle(self._person_list)
 
-        name_list = [p["name"] for p in self.person_list]
+        name_list = [p["name"] for p in self._person_list]
         return name_list[1:n + 1]

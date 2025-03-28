@@ -4,13 +4,13 @@ class NodeEdgeGraph:
     class Node:
         def __init__(self, label: str):
             self.label = label
-            self.next_nodes = [] # Empty list (ArrayList)
+            self._next_nodes = [] # Empty list (ArrayList)
 
         def has_edge(self, node) -> bool:
-            return node in self.next_nodes
+            return node in self._next_nodes
 
         def add_edge(self, node):
-            self.next_nodes.append(node)
+            self._next_nodes.append(node)
 
         
     # -------------------------------------------
@@ -19,7 +19,7 @@ class NodeEdgeGraph:
         self.name = graph_name
         
         # Create an empty dict (Hashmap) of string -> Node
-        self.all_nodes = {}  # type: dict[str,Node]
+        self._all_nodes = {}  # type: dict[str,Node]
         
     def get_node(self, label: str, create=False) -> Node:
         """
@@ -31,13 +31,13 @@ class NodeEdgeGraph:
                       otherwise, will raise ValueError if node is missing (default)
                       (This is a "keyword argument", used to create optional arguments)
         """
-        if label not in self.all_nodes:
+        if label not in self._all_nodes:
             if create:
                 self.add_node(label)
             else:
                 raise ValueError(f"Node {label} does not exist")
             
-        return self.all_nodes[label]
+        return self._all_nodes[label]
 
     def add_node(self, label: str):
         """
@@ -46,11 +46,11 @@ class NodeEdgeGraph:
         Parameters:
             label -- label for the node to add
         """
-        if label in self.all_nodes:
+        if label in self._all_nodes:
             raise ValueError(f"Node {label} already exists in graph")
 
         new_node = self.Node(label)  # Could also just write Node(label)
-        self.all_nodes[label] = new_node
+        self._all_nodes[label] = new_node
 
     def add_directed_edge(self, label1: str, label2: str):
         """
@@ -88,7 +88,7 @@ class NodeEdgeGraph:
         node = self.get_node(from_node)  # throws ValueError if node doesn't exist
 
         neighbors = set()
-        for n in node.next_nodes:
+        for n in node._next_nodes:
             neighbors.add(n.label)
         
         return neighbors
@@ -99,7 +99,7 @@ class NodeEdgeGraph:
         """
         result = set()
 
-        for k in self.all_nodes.keys():
+        for k in self._all_nodes.keys():
             result.add(k)
         
         return result  
