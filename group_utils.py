@@ -26,9 +26,9 @@ class Group:
             self._person_list = []
         else:
             self._person_list = starting_list
-        self.populate_skills()
+        self._populate_skills()
 
-    def populate_skills(self) -> None:
+    def _populate_skills(self) -> None:
         ''' Goes through the people in _person_list and populates _skill_dict,
         which maps a skill name to a Set of people who have that skill. Intended
         as a helper function for the constructor (should not be called 
